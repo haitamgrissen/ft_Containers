@@ -1,6 +1,12 @@
-#include "ft_containers.hpp"
+# include <iostream>
 
-int main()
-{
+# include "ft_containers.hpp"
 
+# include <vector>
+# include <stack>
+# include <map>
+
+int main( void ) {
+
+    return 0;
 }
