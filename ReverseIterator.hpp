@@ -1,5 +1,6 @@
 #pragma once
-#include "../ft_containers.hpp"
+
+#include "miscellaneous.hpp"
 
 namespace ft
 {
@@ -28,7 +29,12 @@ namespace ft
 
 
 
-			reference		operator*() const												{ return *(_current.base());}
+			//reference		operator*() const												{ return *(_current.base());}
+			reference operator*() const
+            {
+                iterator_type tmp = _current;
+                return (*(tmp));
+            }
 			pointer			operator->() const												{ return &(operator*());};
 			reference		operator[](difference_type n) const								{ return _current[-n];};
 
