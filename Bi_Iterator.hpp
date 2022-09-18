@@ -17,55 +17,81 @@ namespace ft {
 
         public:
 
-            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::difference_type    difference_type;
-            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::value_type         value_type;
-            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::pointer            pointer;
-            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::reference          reference;
-            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::iterator_category  iterator_category;
-            
-            Alloc _allocator;
-            typedef pair< const Key, T> pair;
-            typedef node< Key, T> node;
-            operator mapiterator<Key, T> () const { return mapiterator<Key, T> (); }
+            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::difference_type       difference_type;
+            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::value_type            value_type;
+            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::pointer               pointer;
+            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::reference             reference;
+            typedef typename iterator<std::random_access_iterator_tag, pair< const Key, T> >::iterator_category     iterator_category;
+            Alloc                                                                                                   _allocator;
+            typedef pair< const Key, T>                                                                             pair;
+            typedef node< Key, T>                                                                                   node;
+            operator mapiterator<Key, T> () const                                   { return mapiterator<Key, T> (); }
 
-            node *_current;
-            pair *currentData;
-            pair *_safe;
-            node *_root;
+            node *                      _current;
+            pair *                      currentData;
+            pair *                      _safe;
+            node *                      _root;
         
-            mapiterator( ) {
-                
+            mapiterator()
+            {    
                 _current = nullptr; currentData = nullptr;
                 _safe = _allocator.allocate(1);
                 _allocator.construct(_safe, pair(Key(), T()));
                 _root = nullptr;
             }
         
-            mapiterator( node * root, node * current ) {
-            
+            mapiterator( node * root, node * current )
+            {
                 _safe = _allocator.allocate(1);
                 _allocator.construct(_safe, pair(Key(), T()));
-                if (current == nullptr) { currentData = nullptr; } else {currentData = current->data;}
+                if (current == nullptr) 
+                {
+                    currentData = nullptr;
+                } 
+                else
+                {
+                    currentData = current->data;
+                }
                 _current = current;
                 _root = root;
             }
-            ~mapiterator() {
-            
-                // if (_safe != nullptr) {
+
+            mapiterator( const mapiterator& obj )
+            {
+                _current = obj._current;
+                currentData = obj.currentData;
+                _root = obj._root;
+                _safe = _allocator.allocate(1);
+                _allocator.construct(_safe, *obj._safe);
+            }
+    
+            mapiterator &operator=(const mapiterator& obj )
+            {
+                _current = obj._current;
+                currentData = obj.currentData;
+                _root = obj._root;
+                _safe = _allocator.allocate(1);
+                _allocator.construct(_safe, *obj._safe);
+                return *this;
+            }
+
+            ~mapiterator()
+            {
                 _allocator.destroy(_safe);
                 _allocator.deallocate(_safe, 1);
-                // }
             }
-            node *treeMaximum(node *x) const  {
-            
+
+            node *treeMaximum(node *x) const 
+            {
                 if (x == nullptr)
                     return nullptr;
                 while (x->right != nullptr)
                     x = x->right;
                 return x;
             }
-            node *treeMinimum(node *x)  {
-            
+
+            node *treeMinimum(node *x)
+            {
                 if (x == nullptr)
                     return nullptr;
                 while (x->left != nullptr)
@@ -73,22 +99,23 @@ namespace ft {
                 return x;
             }
 
-            node *treeSuccessor(node *x) {
-            
+            node *treeSuccessor(node *x)
+            {
                 if (x == nullptr)
                     return x;
                 if (x->right != nullptr)
                     return treeMinimum(x->right);
                 node *y = x->parent;
-                while (y != nullptr && (x == y->right)) {
-                
+                while (y != nullptr && (x == y->right))
+                {
                     x = y;
                     y = y->parent;
                 }
                 return y;
             }
-            node *treePredecessor(node *x) {
 
+            node *treePredecessor(node *x)
+            {
                 if (x == nullptr)
                     return x;
                 if (x->left != nullptr)
@@ -101,60 +128,41 @@ namespace ft {
                 }
                 return y;
             }
-            mapiterator( const mapiterator& obj ) {
 
-                _current = obj._current;
-                currentData = obj.currentData;
-                _root = obj._root;
-                _safe = _allocator.allocate(1);
-                _allocator.construct(_safe, *obj._safe);
-            }
-    
-            mapiterator &operator=(const mapiterator& obj ) {
 
-                _current = obj._current;
-                currentData = obj.currentData;
-                _root = obj._root;
-                _safe = _allocator.allocate(1);
-                _allocator.construct(_safe, *obj._safe);
-                return *this;
-            }
 
-            pair& operator*() const { if (_current == nullptr) {return *(_safe);} return *_current->data;}
-            pair* operator->() const { if (_current == nullptr) {return _safe;} return _current->data;}
+            pair& operator*() const { if (_current == nullptr)                                                  { return *(_safe);} return *_current->data;}
+            pair* operator->() const { if (_current == nullptr)                                                 { return _safe;} return _current->data;}
         
 
-            mapiterator& operator+= ( difference_type rhs ) { for  (difference_type it = rhs; it >= 1; it--) { (*this)++;} return *this; };
-            mapiterator& operator-= ( difference_type rhs ) { for  (difference_type it = rhs; it >= 1; it--) { (*this)--;} return *this; };
+            mapiterator& operator+= ( difference_type rhs ) { for  (difference_type it = rhs; it >= 1; it--)    { (*this)++;} return *this; };
+            mapiterator& operator-= ( difference_type rhs ) { for  (difference_type it = rhs; it >= 1; it--)    { (*this)--;} return *this; };
 
-            mapiterator& operator--() {
-            
-                if (_root != nullptr && _current == nullptr && currentData == nullptr) {
-                
+            mapiterator& operator--()
+            {
+                if (_root != nullptr && _current == nullptr && currentData == nullptr)
+                {
                     _current = treeMaximum(_root);
                     currentData = _current->data;
                     return *this;
                 }
-
                 _current = treePredecessor(_current);
                 if (_current != nullptr)
                     currentData = _current->data;
                 else
                     currentData = nullptr;
-
                 return *this;
             }
         
-            mapiterator operator++(int)  {
-
-                if (_root != nullptr && _current == nullptr && currentData == nullptr) {
-                
+            mapiterator operator++(int)
+            {
+                if (_root != nullptr && _current == nullptr && currentData == nullptr)
+                {
                     _current = treeMinimum(_root);
                     currentData = _current->data;
                     return *this;
                 }
                 mapiterator tmp(*this);
-            
                 _current = treeSuccessor(_current);
                 if (_current != nullptr)
                     currentData = _current->data;
@@ -163,11 +171,10 @@ namespace ft {
                 return tmp;
             }
 
-            mapiterator& operator++() {
-
-
-                if (_root != nullptr && _current == nullptr && currentData == nullptr) {
-                
+            mapiterator& operator++()
+            {
+                if (_root != nullptr && _current == nullptr && currentData == nullptr) 
+                {
                     _current = treeMinimum(_root);
                     currentData = _current->data;
                     return *this;
@@ -180,11 +187,11 @@ namespace ft {
                 return *this;
             }
 
-            mapiterator operator--(int)  {
-
+            mapiterator operator--(int)
+            {
                 mapiterator tmp(*this);
-                if (_root != nullptr && _current == nullptr && currentData == nullptr) {
-                
+                if (_root != nullptr && _current == nullptr && currentData == nullptr)
+                {
                     _current = treeMaximum(_root);
                     currentData = _current->data;
                     return *this;

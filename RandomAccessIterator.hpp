@@ -92,13 +92,24 @@ namespace ft
 			// /*
 			// =================================	Comparision  =============================================================
 			// */
-			// bool operator== (const RandomAccessIterator<T>&  comp)				{ return (_pointer == comp.base());}
-			// bool operator!= (const RandomAccessIterator<T>&  comp)				{ return (_pointer != comp.base());}
-			// bool operator<  (const RandomAccessIterator<T>&  comp)				{ return (_pointer <  comp.base());}
-			// bool operator<=  (const RandomAccessIterator<T>& comp)				{ return (_pointer <= comp.base());}
-			// bool operator>  (const RandomAccessIterator<T>&  comp)				{ return (_pointer >  comp.base());}
-			// bool operator>=  (const RandomAccessIterator<T>& comp)				{ return (_pointer >= comp.base());}
 
+			template <typename U>
+            bool operator==(const RandomAccessIterator<U> & lhs) { return ( _pointer == lhs.base()); }
+
+            template <typename U>
+            bool operator!=(const RandomAccessIterator<U> & lhs) { return ( _pointer != lhs.base()); }
+
+            template <typename U>
+            bool operator>(const RandomAccessIterator<U> & lhs) { return ( _pointer > lhs.base()); }
+
+            template <typename U>
+            bool operator>=(const RandomAccessIterator<U> & lhs) { return ( _pointer >= lhs.base()); }
+
+            template <typename U>
+            bool operator<(const RandomAccessIterator<U> & lhs) { return ( _pointer < lhs.base()); }
+
+            template <typename U>
+            bool operator<=(const RandomAccessIterator<U> & lhs) { return ( _pointer <= lhs.base()); }
 
 
 			// /*
@@ -115,29 +126,21 @@ namespace ft
 			// =================================	Comparision  =============================================================
 			// */std::cout <<  "haha\n";
 
-			template <class T>
-			bool operator== (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs)				{ return (rhs.base() == lhs.base());}
+			// template <class T>
+			// bool operator== (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs) 				{ return (rhs.base() == lhs.base());}
 
-			template <class T>
-			bool operator!= (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs)				{ return (rhs.base() != lhs.base());}
+			// template <class T>
+			// bool operator!= (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs) 				{ return (rhs.base() != lhs.base());}
 			
-			template <class T>
-			bool operator<  (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs)				{ return (rhs.base() <  lhs.base());}
+			// template <class T>
+			// bool operator<  (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs) 				{ return (rhs.base() <  lhs.base());}
 			
-			template <class T>
-			bool operator<=  (const RandomAccessIterator<T>& rhs, const RandomAccessIterator<T>& lhs)				{ return (rhs.base() <= lhs.base());}
+			// template <class T>
+			// bool operator<=  (const RandomAccessIterator<T>& rhs, const RandomAccessIterator<T>& lhs) 				{ return (rhs.base() <= lhs.base());}
 			
-			template <class T>
-			bool operator>  (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs)				{ return (rhs.base() >  lhs.base());}
+			// template <class T>
+			// bool operator>  (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs) 				{ return (rhs.base() >  lhs.base());}
 			
-			template <class T>
-			bool operator>=  (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs)				{ return (rhs.base() >= lhs.base());}
-	
-
-
-	
-
-
-
-
+			// template <class T>
+			// bool operator>=  (const RandomAccessIterator<T>&  rhs, const RandomAccessIterator<T>&  lhs) 				{ return (rhs.base() >= lhs.base());}
 }
