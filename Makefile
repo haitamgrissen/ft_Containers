@@ -9,17 +9,23 @@ VECTORSRC = TESTS/vector_tests.cpp
 MAPSRC = TESTS/map_tests.cpp
 STACKSRC = TESTS/stack_tests.cpp
 
+
+all: 
+	@echo "\n [Choose the Container to be tested A Mon Camarde!!] \n        (vector | map | stack)? \n"
+
 vector: $(VECTORNAME)
 $(VECTORNAME) : $(VECTORSRC)
-	@$(CC) $(FLAGS)	TESTS/vector_tests.cpp -o $(VECTORNAME)
+	@$(CC) $(FLAGS)	$(VECTORSRC) -o $(VECTORNAME) && ./$(VECTORNAME)
 
 map: $(MAPNAME)
 $(MAPNAME) : $(MAPSRC)
-	@$(CC) $(FLAGS)	TESTS/map_tests.cpp 	-o  $(MAPNAME)
+	@$(CC) $(FLAGS)	$(MAPSRC)	-o  $(MAPNAME) && ./$(MAPNAME)
 
 stack: $(STACKNAME)
 $(STACKNAME) : $(STACKSRC)
-	@$(CC) $(FLAGS)	TESTS/stack_tests.cpp -o $(STACKNAME)
+	@$(CC) $(FLAGS)	$(STACKSRC) -o $(STACKNAME) && ./$(STACKNAME)
 
 clean:
+	rm -f $(VECTORNAME)  $(MAPNAME) $(STACKNAME)
+fclean:
 	rm -f $(VECTORNAME)  $(MAPNAME) $(STACKNAME)

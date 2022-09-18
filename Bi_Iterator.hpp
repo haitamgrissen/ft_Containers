@@ -27,10 +27,7 @@ namespace ft {
             typedef node< Key, T>                                                                                   node;
             operator mapiterator<Key, T> () const                                   { return mapiterator<Key, T> (); }
 
-            node *                      _current;
-            pair *                      currentData;
-            pair *                      _safe;
-            node *                      _root;
+
         
             mapiterator()
             {    
@@ -204,7 +201,13 @@ namespace ft {
                 return tmp;
             }
 
+            node *                      _current;
+            pair *                      currentData;
+            pair *                      _safe;
+            node *                      _root;
+            
             bool operator==(const mapiterator& rhs) const {if (_current && rhs._current) {return _current->data == rhs._current->data;} return (currentData == rhs.currentData);}
             bool operator!=(const mapiterator& rhs) const {if (_current  && rhs._current) {return _current->data != rhs._current->data;} return (currentData != rhs.currentData);}
+    
     };
 }

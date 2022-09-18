@@ -21,27 +21,48 @@ namespace ft
             void pop() { _container.pop_back(); }
 
 
-            container_type base() const { return (_container); }
+
+
+            template <class FIRST, class SECOND>
+            friend bool operator== (const Stack<FIRST,SECOND>& lhs, const Stack<FIRST,SECOND>& rhs);
+
+            template <class FIRST, class SECOND>
+            friend bool operator!= (const Stack<FIRST,SECOND>& lhs, const Stack<FIRST,SECOND>& rhs);
+
+            template <class FIRST, class SECOND>
+            friend bool operator<  (const Stack<FIRST,SECOND>& lhs, const Stack<FIRST,SECOND>& rhs);
+
+            template <class FIRST, class SECOND>
+            friend bool operator<= (const Stack<FIRST,SECOND>& lhs, const Stack<FIRST,SECOND>& rhs);
+
+            template <class FIRST, class SECOND>
+            friend bool operator>  (const Stack<FIRST,SECOND>& lhs, const Stack<FIRST,SECOND>& rhs);
+
+            template <class FIRST, class SECOND>
+            friend bool operator>= (const Stack<FIRST,SECOND>& lhs, const Stack<FIRST,SECOND>& rhs);
+               // container_type base() const { return (_container); }
+
         protected :
             Container _container;
 
     };
-    template <class T, class Container>
-    bool operator== (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs.base() == rhs.base()); }
 
     template <class T, class Container>
-    bool operator!= (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return !(lhs.base() == rhs.base()); }
+    bool operator== (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs._container == rhs._container); }
 
     template <class T, class Container>
-    bool operator<  (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs.base() < rhs.base()); }
+    bool operator!= (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return !(lhs._container == rhs._container); }
 
     template <class T, class Container>
-    bool operator<= (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs.base() <= rhs.base());}
+    bool operator<  (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs._container < rhs._container); }
 
     template <class T, class Container>
-    bool operator>  (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs.base() > rhs.base()); }
+    bool operator<= (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs._container <= rhs._container);}
 
     template <class T, class Container>
-    bool operator>= (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs.base() >= rhs.base()); }
+    bool operator>  (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs._container > rhs._container); }
+
+    template <class T, class Container>
+    bool operator>= (const Stack<T,Container>& lhs, const Stack<T,Container>& rhs) { return (lhs._container >= rhs._container); }
 
 };
